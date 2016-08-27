@@ -1,4 +1,4 @@
-package npe.schjeo.obfuscator.impl
+package npe.schjeo.obfuscator.transform
 
 import npe.schjeo.obfuscator.Obfuscator
 import npe.schjeo.obfuscator.randomstr

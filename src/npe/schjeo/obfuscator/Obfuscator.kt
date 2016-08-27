@@ -1,7 +1,7 @@
 package npe.schjeo.obfuscator
 
-import npe.schjeo.obfuscator.impl.DefaultTransformer
-import npe.schjeo.obfuscator.impl.ClassTransformer
+import npe.schjeo.obfuscator.transform.DefaultTransformer
+import npe.schjeo.obfuscator.transform.ClassTransformer
 import npe.schjeo.obfuscator.zip.ZipContainer
 import npe.schjeo.obfuscator.zip.unzip
 import org.apache.commons.cli.DefaultParser

@@ -1,4 +1,4 @@
-package npe.schjeo.obfuscator.impl
+package npe.schjeo.obfuscator.transform
 
 import org.objectweb.asm.tree.FieldNode
 import org.objectweb.asm.tree.MethodNode
