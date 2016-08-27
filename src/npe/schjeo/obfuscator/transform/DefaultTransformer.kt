@@ -83,7 +83,7 @@ class DefaultTransformer(val obf: Obfuscator, val dict: String, val nameLength: 
             }
         }*/
 
-        if(md.localVariables != null) {
+        if(obf.shuffleIndexes && md.localVariables != null) {
             val idxs = ArrayList<Int>()
             val prims = arrayOf("Z", "B", "S", "C", "I", "F", "D", "J")
             md.localVariables.forEach { idxs.add(it.index) }

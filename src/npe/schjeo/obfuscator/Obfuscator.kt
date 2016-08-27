@@ -25,6 +25,7 @@ fun main(args: Array<String>) {
     options.addOption("hh", "hide", false, "Hides classes, methods and fields from some decompilers by adding to them SYNTHETIC and TRANSIENT access modifiers")
     options.addOption("km", "keepmain", false, "Keep main class from renaming")
     options.addOption("rdi", "remove-debug-info", false, "Remove source file name from classes and line numbers from methods")
+    options.addOption("slv", "shuffle-local-variables", false, "Shuffle indexes of method local variables")
 
     options.addOption(Option.builder("i").longOpt("in").hasArg().argName("path-to-jar").desc("Input jar").build())
     options.addOption(Option.builder("o").longOpt("out").hasArg().argName("path-to-jar").desc("Output jar").build())
@@ -79,7 +80,7 @@ fun main(args: Array<String>) {
     obf.hideAll = cmd.hasOption("hide")
     obf.removeDebug = cmd.hasOption("rdi")
     obf.useDictionary = cmd.hasOption("dic")
-
+    obf.shuffleIndexes = cmd.hasOption("slv")
 
     var dictionary = "0123456789abcdef"
     var nameLength = 16
@@ -110,6 +111,7 @@ class Obfuscator(val inFile: String, val outFile: String) {
     var keepMain = false
     var hideAll = false
     var removeDebug = false
+    var shuffleIndexes = false
     var mainClass: String? = null
 
     val mapTypes = HashMap<String, String>()
