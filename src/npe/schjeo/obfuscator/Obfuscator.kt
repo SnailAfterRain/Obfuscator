@@ -1,7 +1,7 @@
 package npe.schjeo.obfuscator
 
-import npe.schjeo.obfuscator.transform.DefaultTransformer
 import npe.schjeo.obfuscator.transform.ClassTransformer
+import npe.schjeo.obfuscator.transform.DefaultTransformer
 import npe.schjeo.obfuscator.zip.ZipContainer
 import npe.schjeo.obfuscator.zip.unzip
 import org.apache.commons.cli.DefaultParser
@@ -18,8 +18,6 @@ import java.util.regex.Pattern
 
 
 fun main(args: Array<String>) {
-
-    val args1 = args//"-v --keepnames com/fasterxml --dictionary ABCDEF --name-length 10 -i C:/Users/I/Desktop/obftest/ccemuredux-launcher.jar -o C:/Users/I/Desktop/obftest/bsh1.jar".split(' ').toTypedArray()
 
     val options = Options()
     options.addOption("h", "help", false, "Display this help")
@@ -39,9 +37,8 @@ fun main(args: Array<String>) {
                               .desc("Length of a new name").build())
 
 
-
     val parser = DefaultParser()
-    val cmd = parser.parse(options, args1)
+    val cmd = parser.parse(options, args)
     if(cmd.hasOption("help")) {
         val formatter = HelpFormatter()
         formatter.printHelp("obf [args]", options)
