@@ -36,6 +36,8 @@ fun main(args: Array<String>) {
                               .desc("Array of characters to make a new name from").build())
     options.addOption(Option.builder("nlen").longOpt("name-length").hasArg().argName("num")
                               .desc("Length of a new name").build())
+    options.addOption(Option.builder("p").longOpt("pattern").hasArg().argName("pattern")
+                              .desc("Pattern of a new random name").build())
 
 
     val parser = DefaultParser()
@@ -80,12 +82,19 @@ fun main(args: Array<String>) {
     obf.hideAll = cmd.hasOption("hide")
     obf.removeDebug = cmd.hasOption("rdi")
     obf.useDictionary = cmd.hasOption("dic")
+    if(cmd.hasOption("pattern")) {
+        obf.usePattern = cmd.hasOption("pattern")
+        obf.useDictionary = false
+    }
     obf.shuffleIndexes = cmd.hasOption("slv")
 
     var dictionary = "0123456789abcdef"
     var nameLength = 16
     if(cmd.hasOption("dic"))
         dictionary = cmd.getOptionValue("dic")
+    if(cmd.hasOption("pattern"))
+        dictionary = cmd.getOptionValue("pattern")
+
     if(cmd.hasOption("name-length")) {
         try {
             nameLength = cmd.getOptionValue("name-length").toInt()
@@ -95,7 +104,8 @@ fun main(args: Array<String>) {
             return
         }
     }
-    verbose("Using dictionary '$dictionary' and length $nameLength")
+    if(obf.useDictionary)
+        verbose("Using dictionary '$dictionary' and length $nameLength")
     obf.transformer = DefaultTransformer(obf, dictionary, nameLength)
     obf.start()
 
@@ -108,6 +118,7 @@ class Obfuscator(val inFile: String, val outFile: String) {
     lateinit var zipContainer: ZipContainer
     val keepNames = ArrayList<Pattern>()
     var useDictionary = false
+    var usePattern = false
     var keepMain = false
     var hideAll = false
     var removeDebug = false

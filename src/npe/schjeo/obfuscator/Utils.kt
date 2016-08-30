@@ -9,11 +9,11 @@ fun verbose(str: String) {
         println("# $str")
 }
 
-fun randomstr(vocab: String, size: Int): String {
+fun randomstr(dic: String, size: Int): String {
     val sb = StringBuilder()
     val r = Random()
     (1..size).forEach {
-        sb.append(vocab[r.nextInt(vocab.length)])
+        sb.append(dic[r.nextInt(dic.length)])
     }
     return sb.toString()
 }

@@ -2,6 +2,7 @@ package npe.schjeo.obfuscator.transform
 
 import npe.schjeo.obfuscator.Obfuscator
 import npe.schjeo.obfuscator.randomstr
+import npe.schjeo.obfuscator.utils.RandomGenerator
 import org.objectweb.asm.tree.FieldNode
 import org.objectweb.asm.tree.MethodNode
 import java.util.*
@@ -11,12 +12,18 @@ class DefaultTransformer(val obf: Obfuscator, val dict: String, val nameLength: 
 
     var classCount = 0
     var fieldCount = 0
+    var rgen = RandomGenerator(dict)
 
     override fun transformClassName(old: String): String {
         var name: String
         if(obf.useDictionary) {
             do {
                 name = randomstr(dict, nameLength)
+            } while(obf.mapTypes.containsValue(name))
+        }
+        else if(obf.usePattern) {
+            do {
+                name = rgen.next()
             } while(obf.mapTypes.containsValue(name))
         }
         else {
@@ -31,6 +38,11 @@ class DefaultTransformer(val obf: Obfuscator, val dict: String, val nameLength: 
         if(obf.useDictionary) {
             do {
                 name = randomstr(dict, nameLength)
+            } while(obf.mapFields.containsValue(name))
+        }
+        else if(obf.usePattern) {
+            do {
+                name = rgen.next()
             } while(obf.mapFields.containsValue(name))
         }
         else {
@@ -82,7 +94,6 @@ class DefaultTransformer(val obf: Obfuscator, val dict: String, val nameLength: 
                 //md.maxStack+=3
             }
         }*/
-
         if(obf.shuffleIndexes && md.localVariables != null) {
             val idxs = ArrayList<Int>()
             val prims = arrayOf("Z", "B", "S", "C", "I", "F", "D", "J")
@@ -93,7 +104,6 @@ class DefaultTransformer(val obf: Obfuscator, val dict: String, val nameLength: 
                 val i1 = idxs[Random().nextInt(idxs.size)]
                 idxs.remove(i1)
                 it.index = it.index xor 2//i1
-
             }
         }
 
